@@ -2,24 +2,45 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [book, setBook] = useState({
+    titulo: '',
+    autor: '',
+    edicion: 0
+  })
+
+  const [books, setBooks] = useState([]);
+
+  const [listUpdate, setListUpdated] = useState(false);
+
+  useEffect(() => {
+    const getBooks = () => {
+      fetch('')
+        .then(res => res.json())
+        .then(res => setBooks(res))
+    }
+    getBooks()
+    setListUpdated(false)
+  }, [listUpdate])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Navbar brand='Library App'/>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-7'>
+              <h2 style={{ texAlign: 'center' }}> Book List </h2>
+              <BookList book={book} setBook={setBook} books={books} setListUpdated={setListUpdated} />
+            </div>
+            <div className='col-5'>
+              <h2 style={{ textAlign: 'center' }}> Book Form</h2>
+              <Form book={book} setBook={setBook} />
+            </div>
+          </div>
+        </div>
+    </Fragment>
   );
+
 }
 
 export default App;
